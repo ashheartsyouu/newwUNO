@@ -141,6 +141,10 @@ public class Rules {
 			placecard.add(removedCard);
 			System.out.print("Player placed the card: ");
 			removedCard.printInfo();
+	
+			if(removedCard.getCardVal().equals("Reverse")) {
+				reverse();
+			}
 			
 			topCard();
 			
@@ -188,8 +192,15 @@ public class Rules {
 		}
 	}
 	
+	public void reverse() {
+		Collections.reverse(players);
+		
+	}
 
 	
 }
+
+
+
 
 
