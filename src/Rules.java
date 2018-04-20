@@ -110,8 +110,6 @@ public class Rules {
 					if(ap.getHand().size() == 0) {
 						System.out.println(ap.getName() + "is the winner! Congrats! Thanks for playing!");
 						winnerFound = true;
-					//if(ap.getName().equals("B")) {
-						//winnerFound = true;
 					}
 					}
 
