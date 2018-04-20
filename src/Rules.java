@@ -75,6 +75,7 @@ public class Rules {
 			printPlayers();
 		} else {
 			System.out.println("Goodbye!");
+			System.exit(0);
 		}
 		
 		for(Players p: players) {
