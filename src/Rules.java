@@ -1,6 +1,3 @@
-//moved addPlayer(),addComputer(), and printPlayer() from Base to Rules class
-//added beginGame(), which has the welcome text and adds computer + player
-
 import java.util.*;
 
 public class Rules {
@@ -9,6 +6,8 @@ public class Rules {
 	private Players p = new Players();
 	private ArrayList<Cards> placecard = new ArrayList<Cards>();
 	private PickUpCards deck = new PickUpCards();
+	private Cards removedCard;
+	private Computer c = new Computer();
 	
 	
 	public Rules() {//constructor, so that players, scnr, etc can be accessable everywhere (it cant if its private)
@@ -50,7 +49,7 @@ public class Rules {
 
 	public void addComputer() { // Method to generate the computer player.
 		String name = "Computer";
-		Players comp = new Players(name);
+		Computer comp = new Computer(name);
 		players.add(comp);
 	}
 
@@ -102,7 +101,7 @@ public class Rules {
 				}
 				
 				if(ap.getName().equals("Computer")) {
-					System.out.println("Comp's turn");
+					System.out.println("Computer completed it's turn.");
 					//need to finish
 				}
 				else {
@@ -137,16 +136,20 @@ public class Rules {
 			curr.printHand();
 			System.out.println("What card do you want to use?: ");
 			int cardNum = scnr.nextInt()-1;
-			Cards removedCard = curr.getHand().remove(cardNum);
-			placecard.add(removedCard);
-			System.out.print("Player placed the card: ");
+			removedCard = curr.getHand().remove(cardNum);
+			
+			if(checkCard() == false) {
+				curr.getHand().add(removedCard);
+			}
+
+			System.out.print(curr.getName() + " placed the card: ");
 			removedCard.printInfo();
+			
 	
 			if(removedCard.getCardVal().equals("Reverse")) {
 				reverse();
 			}
 			
-			topCard();
 			
 			printOptions();
 			action = scnr.nextInt();
@@ -172,6 +175,7 @@ public class Rules {
 		default:
 			System.out.println("Please pick a valid option");
 			printOptions();
+			action = scnr.nextInt();
 			repeat = true;
 			break;
 			}
@@ -196,10 +200,31 @@ public class Rules {
 		Collections.reverse(players);
 		
 	}
+	
+	public boolean checkCard() {
+		if(removedCard.getColor() == placecard.get(placecard.size()-1).getColor()) {
+			placecard.add(removedCard);
+			topCard();
+			return true;
+		}
+		else if(removedCard.getCardVal() == placecard.get(placecard.size()-1).getCardVal()) {
+			placecard.add(removedCard);
+			topCard();
+			return true;
+		}
+		else if(removedCard.getColor().equals("Black")) {
+			placecard.add(removedCard);
+			topCard();
+			return true;
+		}
+		else {
+			System.out.println("You cannot use this card because either the color or value does not match the face card.");
+			return false;
+		}
+	}
 
 	
 }
-
 
 
 
