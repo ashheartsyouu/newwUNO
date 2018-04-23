@@ -11,6 +11,6 @@ public class Base {
 			
 			
 			//all that's left to work on is the computer's gameplay and the rules, such as checking if the card placed matches the face card
-			//and also things like +2,etc
+			//and also things like +2, reverse, etc
 	}
 }
