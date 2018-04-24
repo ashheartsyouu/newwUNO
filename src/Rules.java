@@ -51,8 +51,8 @@ public class Rules {
 
 	public void addComputer() { // Method to generate the computer player.
 		String name = "Computer";
-		Computer comp = new Computer(name);
-		players.add(comp);
+		c = new Computer(name);
+		players.add(c);
 	}
 
 	public void printPlayers() {
