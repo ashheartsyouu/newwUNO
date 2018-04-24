@@ -7,6 +7,7 @@ public class Rules {
 	private ArrayList<Cards> placecard = new ArrayList<Cards>();
 	private PickUpCards deck = new PickUpCards();
 	private Cards removedCard;
+	private Cards topCard;
 	private Computer c = new Computer();
 	private int wildCardColor;
 	
@@ -48,11 +49,11 @@ public class Rules {
 
 	}
 
-	/*public void addComputer() { // Method to generate the computer player.
+	public void addComputer() { // Method to generate the computer player.
 		String name = "Computer";
 		Computer comp = new Computer(name);
 		players.add(comp);
-	}*/
+	}
 
 	public void printPlayers() {
 		int i = 0;
@@ -68,7 +69,7 @@ public class Rules {
 		System.out.println("Welcome to UNO!");
 		System.out.println("Would you like to begin? Y or N?");
 		String response = scnr.next();
-		//addComputer();
+		addComputer();
 
 		if (response.toUpperCase().equals("Y")) {// Starts the set-up for the game
 			addPlayer();
@@ -102,6 +103,7 @@ public class Rules {
 				}
 				
 				if(ap.getName().equals("Computer")) {
+					c.compTurn(getTopCard(), placecard);
 					System.out.println("Computer completed it's turn.");
 					//need to finish
 				}
@@ -170,26 +172,17 @@ public class Rules {
 			break;
 		case 2:
 			curr.printHand();
-			System.out.print("\nHere is your card: ");
+			System.out.print("Here is your card: ");
 			Cards newCard = deck.gimmeACard();
 			newCard.printInfo();
 			curr.takeCard(newCard);
-			
-			printOptions();
-			action = scnr.nextInt();
-			
-			repeat = true;
+			repeat = false;
 			break;
 		case 3: 
-			if(curr.getHand().size() == 1) {
-				System.out.println("UNO!");
-			}
-			else {
-				System.out.print("\nYou do not have one card left. \nAs punishment, here is your card: ");
-				Cards pCard = deck.gimmeACard();
-				pCard.printInfo();
-				curr.takeCard(pCard);
-			}
+			System.out.println("UNO!");
+			//could check by if user actually has one card left. could also do punishment were we do curr.takeCard(gimmeACard()) 
+			repeat = false;
+			break;
 		case 4:
 			System.out.println(curr.getName() + "'s turn is over \n");
 			repeat = false;
@@ -279,6 +272,11 @@ public class Rules {
 			System.out.println("You cannot use this card because either the color or value does not match the face card.");
 			return false;
 		}
+	}
+	
+	public Cards getTopCard() {
+		topCard = placecard.get(placecard.size()-1);
+		return topCard;
 	}
 	
 
