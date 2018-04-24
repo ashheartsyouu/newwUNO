@@ -1,5 +1,12 @@
+import java.util.*;
 
 public class Computer extends Players {
+	
+	private Cards removedCard;
+	private Cards aCard;
+	private String[] colors = {"Red", "Blue", "Yellow", "Green"};
+	private String pickedColor;
+	private Random rand;
 
 	/**
 	 * 
@@ -17,6 +24,49 @@ public class Computer extends Players {
 		// TODO Auto-generated constructor stub
 	}
 	
-
+	public void compTurn(Cards topCard, ArrayList<Cards> placecard) {	//Plays the computer's card
+		
+		boolean validCard = checkHand(topCard);
+		if (validCard == true) {
+			placecard.add(removedCard);
+			if (removedCard.getColor() == "Black") {
+				pickedColor = colors[rand.nextInt(4)];
+				System.out.println("The new color is: " + pickedColor);
+			}
+		}
+		else {
+			while (validCard == false) {
+				takeCard(aCard);
+				validCard = checkHand(topCard);
+			}
+		}
+		
+	}
+	
+	public boolean checkHand(Cards topCard) {	//Checks to see if the computer has a card to play
+		
+		for(int i = 0; i < hand.size(); i++) {
+			if (hand.get(i).getColor() == topCard.getColor()) {
+				System.out.println("Computer played " + hand.get(i).getColor() + ", " + hand.get(i).getCardVal());
+				removedCard = hand.get(i);
+				hand.remove(i);
+				return true;
+			}
+			else if (hand.get(i).getCardVal() == topCard.getCardVal()) {
+				System.out.println("Computer played " + hand.get(i).getColor() + ", " + hand.get(i).getCardVal());
+				removedCard = hand.get(i);
+				hand.remove(i);
+				return true;
+			}
+			else if (hand.get(i).getColor() == "Black") {
+				System.out.println("Computer played " + hand.get(i).getColor() + ", " + hand.get(i).getCardVal());
+				removedCard = hand.get(i);
+				hand.remove(i);
+				return true;
+			}
+		}
+		System.out.println("The computer does not have a card that matches");
+		return false;
+	}
 
 }
