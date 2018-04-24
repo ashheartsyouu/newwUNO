@@ -48,11 +48,11 @@ public class Rules {
 
 	}
 
-	public void addComputer() { // Method to generate the computer player.
+	/*public void addComputer() { // Method to generate the computer player.
 		String name = "Computer";
 		Computer comp = new Computer(name);
 		players.add(comp);
-	}
+	}*/
 
 	public void printPlayers() {
 		int i = 0;
@@ -68,7 +68,7 @@ public class Rules {
 		System.out.println("Welcome to UNO!");
 		System.out.println("Would you like to begin? Y or N?");
 		String response = scnr.next();
-		addComputer();
+		//addComputer();
 
 		if (response.toUpperCase().equals("Y")) {// Starts the set-up for the game
 			addPlayer();
@@ -107,15 +107,16 @@ public class Rules {
 				}
 				else {
 					playerTurn(ap);
-					
-					if(ap.getHand().size() == 0) {
-						System.out.println(ap.getName() + "is the winner! Congrats! Thanks for playing!");
-						winnerFound = true;
 					}
+				if(placecard.get(placecard.size()-1).getCardVal().equals("Skip")) {
+					ap = players.get(players.indexOf(ap)+1);
+				}
+				if(ap.getHand().size() == 0) {
+					System.out.println(ap.getName() + "is the winner! Congrats! Thanks for playing!");
+					winnerFound = true;
 					}
 
-				
-				
+		
 				
 				}
 				}
@@ -152,6 +153,15 @@ public class Rules {
 			if(removedCard.getCardVal().equals("Reverse")) {
 				reverse();
 			}
+			else if(removedCard.getCardVal().equals("Skip")) {
+				int next = players.indexOf(curr)+1;
+				Players np = players.get(next);
+			}
+			else if(removedCard.getCardVal().equals("+2")) {
+				int next = players.indexOf(curr)+1;
+				Players np = players.get(next);
+				np.plusTwo();
+			}
 			
 			
 			printOptions();
@@ -160,26 +170,17 @@ public class Rules {
 			break;
 		case 2:
 			curr.printHand();
-			System.out.print("\nHere is your card: ");
+			System.out.print("Here is your card: ");
 			Cards newCard = deck.gimmeACard();
 			newCard.printInfo();
 			curr.takeCard(newCard);
-			
-			printOptions();
-			action = scnr.nextInt();
-			
-			repeat = true;
+			repeat = false;
 			break;
 		case 3: 
-			if(curr.getHand().size() == 1) {
-				System.out.println("UNO!");
-			}
-			else {
-				System.out.print("\nYou do not have one card left. \nAs punishment, here is your card: ");
-				Cards pCard = deck.gimmeACard();
-				pCard.printInfo();
-				curr.takeCard(pCard);
-			}
+			System.out.println("UNO!");
+			//could check by if user actually has one card left. could also do punishment were we do curr.takeCard(gimmeACard()) 
+			repeat = false;
+			break;
 		case 4:
 			System.out.println(curr.getName() + "'s turn is over \n");
 			repeat = false;
@@ -219,12 +220,13 @@ public class Rules {
 		if(removedCard.getColor() == placecard.get(placecard.size()-1).getColor()) {
 			placecard.add(removedCard);
 			topCard();
-			return true;
+			return true;	
 		}
 		else if(removedCard.getCardVal() == placecard.get(placecard.size()-1).getCardVal()) {
 			placecard.add(removedCard);
 			topCard();
 			return true;
+			
 		}
 		else if(removedCard.getColor().equals("Black")) {
 			placecard.add(removedCard);
@@ -269,9 +271,11 @@ public class Rules {
 			return false;
 		}
 	}
+	
 
 	
 }
+
 
 
 
