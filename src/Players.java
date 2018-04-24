@@ -3,10 +3,10 @@ import java.util.*;
 public class Players {
 	
 	private String name;
-	private ArrayList<Cards> hand;
+	public ArrayList<Cards> hand;
 	public ArrayList<Players> players = new ArrayList<Players>();
 	private Scanner scnr = new Scanner(System.in);
-	private PickUpCards deck = new PickUpCards();
+	public PickUpCards deck = new PickUpCards();
 	private String currPlayer;
 	
 	public Players(String name)
