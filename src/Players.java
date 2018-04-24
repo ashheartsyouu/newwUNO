@@ -70,6 +70,12 @@ public class Players {
 			takeCard(deck.gimmeACard());
 		}
 	}
+	
+	public void plusTwo() {
+		for(int i = 0; i < 2; ++i) {
+			takeCard(deck.gimmeACard());
+		}
+	}
 
 	
 	
