@@ -170,17 +170,26 @@ public class Rules {
 			break;
 		case 2:
 			curr.printHand();
-			System.out.print("Here is your card: ");
+			System.out.print("\nHere is your card: ");
 			Cards newCard = deck.gimmeACard();
 			newCard.printInfo();
 			curr.takeCard(newCard);
-			repeat = false;
+			
+			printOptions();
+			action = scnr.nextInt();
+			
+			repeat = true;
 			break;
 		case 3: 
-			System.out.println("UNO!");
-			//could check by if user actually has one card left. could also do punishment were we do curr.takeCard(gimmeACard()) 
-			repeat = false;
-			break;
+			if(curr.getHand().size() == 1) {
+				System.out.println("UNO!");
+			}
+			else {
+				System.out.print("\nYou do not have one card left. \nAs punishment, here is your card: ");
+				Cards pCard = deck.gimmeACard();
+				pCard.printInfo();
+				curr.takeCard(pCard);
+			}
 		case 4:
 			System.out.println(curr.getName() + "'s turn is over \n");
 			repeat = false;
