@@ -97,8 +97,9 @@ public class Rules {
 	public void gamePlay() {
 		boolean winnerFound = false;
 		while(winnerFound == false) {
-			for(Players ap: players) {
-				if(deck.getDeck().size() == 0) {
+			for(int i = 0; i < players.size(); i++) {
+					Players ap = players.get(i);
+					if(deck.getDeck().size() == 0) {
 					deck.moveDeck(placecard);
 				}
 				
@@ -111,18 +112,22 @@ public class Rules {
 					playerTurn(ap);
 					}
 				if(placecard.get(placecard.size()-1).getCardVal().equals("Skip")) {
-					ap = players.get(players.indexOf(ap)+1);
+					if(i == players.size() -1) {
+						i = 0;
+					}
+					else {
+					++i;
+					}
 				}
 				if(ap.getHand().size() == 0) {
 					System.out.println(ap.getName() + "is the winner! Congrats! Thanks for playing!");
 					winnerFound = true;
+					i = players.size();
 					}
 
-		
-				
 				}
 				}
-			}
+				}
 	
 	public void playerTurn(Players curr) {
 		System.out.println(curr.getName() + "'s turn. What would you like to do? \n");
@@ -154,10 +159,6 @@ public class Rules {
 	
 			if(removedCard.getCardVal().equals("Reverse")) {
 				reverse();
-			}
-			else if(removedCard.getCardVal().equals("Skip")) {
-				int next = players.indexOf(curr)+1;
-				Players np = players.get(next);
 			}
 			else if(removedCard.getCardVal().equals("+2")) {
 				int next = players.indexOf(curr)+1;
