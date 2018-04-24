@@ -8,6 +8,7 @@ public class Rules {
 	private PickUpCards deck = new PickUpCards();
 	private Cards removedCard;
 	private Computer c = new Computer();
+	private int wildCardColor;
 	
 	
 	public Rules() {//constructor, so that players, scnr, etc can be accessable everywhere (it cant if its private)
@@ -136,7 +137,9 @@ public class Rules {
 			curr.printHand();
 			System.out.println("What card do you want to use?: ");
 			int cardNum = scnr.nextInt()-1;
+			
 			removedCard = curr.getHand().remove(cardNum);
+			
 			
 			if(checkCard() == false) {
 				curr.getHand().add(removedCard);
@@ -191,6 +194,8 @@ public class Rules {
 		if(placecard.size() == 0) {
 			placecard.get(placecard.size()).printInfo();
 		}
+
+		
 		else {
 			placecard.get(placecard.size()-1).printInfo();
 		}
@@ -215,6 +220,39 @@ public class Rules {
 		else if(removedCard.getColor().equals("Black")) {
 			placecard.add(removedCard);
 			topCard();
+			System.out.println("What color would you like to make the deck?");
+			System.out.println("1. Red \n" + "2. Blue \n" + "3. Green \n" + "4. Yellow \n");
+			wildCardColor = scnr.nextInt();
+			
+			
+			boolean repeat = true;
+			while(repeat == true) {
+			
+			switch(wildCardColor) {
+			case 1:
+				removedCard.setColor("Red");
+				repeat = false;
+				break;
+			case 2:
+				removedCard.setColor("Blue");
+				repeat = false;
+				break;
+			case 3:
+				removedCard.setColor("Green");
+				repeat = false;
+				break;
+			case 4:
+				removedCard.setColor("Yellow");
+				repeat = false;
+				break;
+			default:
+				System.out.println("Please type in a valid response");
+				wildCardColor = scnr.nextInt();
+				repeat = true;
+				break;
+			}
+			}
+			
 			return true;
 		}
 		else {
@@ -225,7 +263,6 @@ public class Rules {
 
 	
 }
-
 
 
 
