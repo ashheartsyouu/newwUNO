@@ -7,7 +7,7 @@ public class Players {
 	public ArrayList<Players> players = new ArrayList<Players>();
 	private Scanner scnr = new Scanner(System.in);
 	public PickUpCards deck = new PickUpCards();
-	private String currPlayer;
+	public String currPlayer;
 	
 	public Players(String name)
 	{
