@@ -192,6 +192,8 @@ public class Rules {
 				pCard.printInfo();
 				curr.takeCard(pCard);
 			}
+			repeat = false;
+			break;
 		case 4:
 			System.out.println(curr.getName() + "'s turn is over \n");
 			repeat = false;
