@@ -27,21 +27,19 @@ public class Computer extends Players {
 	public void compTurn(Cards topCard, ArrayList<Cards> placecard) {	//Plays the computer's card
 		
 		boolean validCard = checkHand(topCard);
-		if (validCard == true) {
-			placecard.add(removedCard);
-			if (removedCard.getColor() == "Black") {
-				pickedColor = colors[rand.nextInt(4)];
-				System.out.println("The new color is: " + pickedColor);
+			if (validCard == true) {
+				placecard.add(removedCard);
+				if (removedCard.getColor() == "Black") {
+					pickedColor = colors[rand.nextInt(4)];
+					System.out.println("The new color is: " + pickedColor);
+				}
 			}
-		}
-		else {
-			while (validCard == false) {
+			else {
 				takeCard(aCard);
-				validCard = checkHand(topCard);
 			}
-		}
-		
 	}
+		
+
 	
 	public boolean checkHand(Cards topCard) {	//Checks to see if the computer has a card to play
 		
