@@ -3,11 +3,8 @@ import java.util.*;
 public class Rules {
 	private ArrayList<Players> players = new ArrayList<Players>();
 	private static Scanner scnr = new Scanner(System.in);
-	private Players p = new Players();
 	private ArrayList<Cards> placecard = new ArrayList<Cards>();
 	private PickUpCards deck = new PickUpCards();
-	private Cards removedCard;
-	private Cards topCard;
 	private Computer c = new Computer();
 	private int wildCardColor;
 	
@@ -69,7 +66,7 @@ public class Rules {
 		System.out.println("Welcome to UNO!");
 		System.out.println("Would you like to begin? Y or N?");
 		String response = scnr.next();
-		addComputer();
+		
 
 		if (response.toUpperCase().equals("Y")) {// Starts the set-up for the game
 			addPlayer();
@@ -80,7 +77,7 @@ public class Rules {
 		}
 		
 		for(Players p: players) {
-			p.generateHand();
+			p.generateHand(deck);
 		}
 		
 
@@ -104,13 +101,15 @@ public class Rules {
 				}
 				
 				if(ap.getName().equals("Computer")) {
-					c.compTurn(getTopCard(), placecard);
+					Cards removedCard = c.compTurn(getTopCard(), placecard, deck, players);
+					if(removedCard == null) {
+						c.takeCard(deck.gimmeACard());
+					}
 					System.out.println("Computer completed it's turn.");
-					//need to finish
 				}
 				else {
 					playerTurn(ap);
-					}
+				}
 				if(placecard.get(placecard.size()-1).getCardVal().equals("Skip")) {
 					if(i == players.size() -1) {
 						i = 0;
@@ -119,6 +118,7 @@ public class Rules {
 					++i;
 					}
 				}
+				
 				if(ap.getHand().size() == 0) {
 					System.out.println(ap.getName() + "is the winner! Congrats! Thanks for playing!");
 					winnerFound = true;
@@ -127,7 +127,8 @@ public class Rules {
 
 				}
 				}
-				}
+	}
+
 	
 	public void playerTurn(Players curr) {
 		System.out.println(curr.getName() + "'s turn. What would you like to do? \n");
@@ -145,25 +146,24 @@ public class Rules {
 			curr.printHand();
 			System.out.println("What card do you want to use?: ");
 			int cardNum = scnr.nextInt()-1;
+		
+			Cards removedCard = curr.getHand().remove(cardNum);
 			
-			removedCard = curr.getHand().remove(cardNum);
-			
-			
-			if(checkCard() == false) {
+			if(checkCard(removedCard) == false) {
 				curr.getHand().add(removedCard);
 			}
 
 			System.out.print(curr.getName() + " placed the card: ");
 			removedCard.printInfo();
 			
-	
 			if(removedCard.getCardVal().equals("Reverse")) {
 				reverse();
 			}
+	
 			else if(removedCard.getCardVal().equals("+2")) {
 				int next = players.indexOf(curr)+1;
 				Players np = players.get(next);
-				np.plusTwo();
+				np.plusTwo(deck);
 			}
 			
 			
@@ -230,7 +230,7 @@ public class Rules {
 		
 	}
 	
-	public boolean checkCard() {
+	public boolean checkCard(Cards removedCard) {
 		if(removedCard.getColor() == placecard.get(placecard.size()-1).getColor()) {
 			placecard.add(removedCard);
 			topCard();
@@ -287,8 +287,7 @@ public class Rules {
 	}
 	
 	public Cards getTopCard() {
-		topCard = placecard.get(placecard.size()-1);
-		return topCard;
+		return placecard.get(placecard.size()-1);
 	}
 	
 
