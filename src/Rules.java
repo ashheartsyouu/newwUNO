@@ -3,7 +3,7 @@ import java.util.*;
 public class Rules {
 	private ArrayList<Players> players = new ArrayList<Players>();
 	private static Scanner scnr = new Scanner(System.in);
-	private ArrayList<Cards> placecard = new ArrayList<Cards>();
+	private ArrayList<Cards> placecard = new ArrayList<Cards>(); //this is the discard deck, the cards that the players put down
 	private PickUpCards deck = new PickUpCards();
 	private Computer c = new Computer();
 	private int wildCardColor;
