@@ -3,10 +3,9 @@ import java.util.*;
 public class Computer extends Players {
 	
 	private Cards removedCard;
-	private Cards aCard;
 	private String[] colors = {"Red", "Blue", "Yellow", "Green"};
 	private String pickedColor;
-	private Random rand;
+	private Random rand = new Random();
 
 	/**
 	 * 
@@ -24,7 +23,7 @@ public class Computer extends Players {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void compTurn(Cards topCard, ArrayList<Cards> placecard) {	//Plays the computer's card
+	public Cards compTurn(Cards topCard, ArrayList<Cards> placecard, PickUpCards deck, ArrayList<Players> players) {	//Plays the computer's card
 		
 		boolean validCard = checkHand(topCard);
 			if (validCard == true) {
@@ -32,11 +31,20 @@ public class Computer extends Players {
 				if (removedCard.getColor() == "Black") {
 					pickedColor = colors[rand.nextInt(4)];
 					System.out.println("The new color is: " + pickedColor);
+					removedCard.setColor(pickedColor);
+					
+				if(removedCard.getCardVal().equals("Reverse")) {
+						Collections.reverse(players);
+					}
+			
+				else if(removedCard.getCardVal().equals("+2")) {
+						Players np = players.get(1);
+						np.plusTwo(deck);
+					}
 				}
-			}
-			else {
-				takeCard(aCard);
-			}
+					return removedCard;
+				}
+				return null;
 	}
 		
 
