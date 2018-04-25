@@ -129,7 +129,6 @@ public class Rules {
 				}
 	}
 
-	
 	public void playerTurn(Players curr) {
 		System.out.println(curr.getName() + "'s turn. What would you like to do? \n");
 		
@@ -162,6 +161,9 @@ public class Rules {
 	
 			else if(removedCard.getCardVal().equals("+2")) {
 				int next = players.indexOf(curr)+1;
+				if(next > players.size()-1) {
+					next = 0;
+				}
 				Players np = players.get(next);
 				np.plusTwo(deck);
 			}
