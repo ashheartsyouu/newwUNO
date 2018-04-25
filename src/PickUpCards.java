@@ -22,7 +22,6 @@ public class PickUpCards {
 			return aCard;
 		}
 		
-		//need to have a loop that goes up to 13 four times
 		private void generateDeck() { //private so that the user uses this as an object and not edit this
 			
 			String[] color = {"Red", "Blue", "Green", "Yellow"};
@@ -33,12 +32,8 @@ public class PickUpCards {
 				Cards wCard =  new Cards("Black", "Wild Color");
 				deck.add(wCard);
 			};
-			
-			for(int i=0; i<4;++i) {
-				Cards wCard =  new Cards("Black", "+4 & Wild Color");
-				deck.add(wCard);
-			}
-				
+
+				//limitation: no +4 wild color
 			int deckSpot = 0; //this is the counter that increments and counts the number of cards
 			for(int i = 0; i < color.length; ++i) {
 				for(int j = 0; j < cardVal.length;++j) {
@@ -49,7 +44,7 @@ public class PickUpCards {
 		}
 		
 		public void moveDeck(ArrayList<Cards> pd) { //create method to move place cards deck into pick up cards
-			while(!pd.isEmpty()) {
+			while(!(pd.size() == 1)) {
 				deck.add(pd.remove(0));
 			}
 		}
