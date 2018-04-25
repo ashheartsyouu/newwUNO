@@ -66,7 +66,7 @@ public class Rules {
 		System.out.println("Welcome to UNO!");
 		System.out.println("Would you like to begin? Y or N?");
 		String response = scnr.next();
-		
+		addComputer();
 
 		if (response.toUpperCase().equals("Y")) {// Starts the set-up for the game
 			addPlayer();
