@@ -6,7 +6,6 @@ public class Players {
 	public ArrayList<Cards> hand;
 	public ArrayList<Players> players = new ArrayList<Players>();
 	private Scanner scnr = new Scanner(System.in);
-	public PickUpCards deck = new PickUpCards();
 	public String currPlayer;
 	
 	public Players(String name)
@@ -67,13 +66,13 @@ public class Players {
 		System.out.println("-------------------------------------------");
 	}
 
-	public void generateHand() {
+	public void generateHand(PickUpCards deck) {
 		for(int i = 0; i < 7; ++i) {
 			takeCard(deck.gimmeACard());
 		}
 	}
 	
-	public void plusTwo() {
+	public void plusTwo(PickUpCards deck) {
 		for(int i = 0; i < 2; ++i) {
 			takeCard(deck.gimmeACard());
 		}
